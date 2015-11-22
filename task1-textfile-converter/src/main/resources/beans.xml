@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+  <bean id="sourceList" class="ru.tander.tasks.task1.sourcelist.FileSourceListImpl"/>
+
+  <bean id="converter" class="ru.tander.tasks.task1.converter.ConverterImpl">
+    <constructor-arg ref="resultWriter"/>
+  </bean>
+
+  <bean id="resultWriter" class="ru.tander.tasks.task1.resultwriter.FileBufferedResultWriterImpl">
+    <constructor-arg value="#{T(ru.tander.tasks.task1.config.ApplicationConfig).OutputFileName}"/>
+  </bean>
+
+  <bean id="converterManager" class="ru.tander.tasks.task1.converter.ConverterManager">
+    <property name="sourceList" ref="sourceList"/>
+    <property name="converter" ref="converter"/>
+    <property name="resultWriter" ref="resultWriter"/>
+  </bean>
+</beans>
